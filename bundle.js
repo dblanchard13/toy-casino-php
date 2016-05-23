@@ -550,7 +550,7 @@
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"app\">\n  <header>\n    <nav>\n      <div class=\"logo\">\n        <span ui-sref=\"home\">\n          <a ui-sref=\"home\">dbCasino</a>\n        </span>\n      </div>\n      <div class=\"links\">\n        <a ui-sref=\"casino\">slotMachine</a>\n        <a ui-sref=\"rules\">payoutRules</a>\n        <a href=\"https://github.com/dblanchard13/toy-casino-client\" target=\"\">sourceCode</a>\n        <a ui-sref=\"auth\" ng-click=\"vm.logout()\" ng-if=\"vm.loggedIn()\">logout</a>\n        <a ui-sref=\"auth\" ng-if=\"!vm.loggedIn()\">signin</a>\n\n      </div>\n    </nav>\n  </header>\n  <main>\n    <div ui-view></div>\n  </main>\n  <footer></footer>\n</div>\n"
+	module.exports = "<div id=\"app\">\n  <header>\n    <nav>\n      <div class=\"logo\">\n        <span ui-sref=\"home\">\n          <a ui-sref=\"home\">dbCasino</a>\n        </span>\n      </div>\n      <div class=\"links\">\n        <a ui-sref=\"casino\">slotMachine</a>\n        <a ui-sref=\"rules\">payoutRules</a>\n        <a href=\"https://github.com/dblanchard13/toy-casino-client\" target=\"_blank\">sourceCode</a>\n        <a ui-sref=\"auth\" ng-click=\"vm.logout()\" ng-if=\"vm.loggedIn()\">logout</a>\n        <a ui-sref=\"auth\" ng-if=\"!vm.loggedIn()\">signin</a>\n\n      </div>\n    </nav>\n  </header>\n  <main>\n    <div ui-view></div>\n  </main>\n  <footer></footer>\n</div>\n"
 
 /***/ },
 /* 10 */
