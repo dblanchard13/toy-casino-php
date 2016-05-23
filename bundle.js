@@ -99,15 +99,13 @@
 	
 	var _componentsRulesRules = __webpack_require__(70);
 	
-	var _componentsTestingTesting = __webpack_require__(76);
-	
 	_angular2['default'].module('app', [_angularUiRouter2['default'], _angularAnimate2['default'], _ngFx2['default'],
 	// home is the module, the angular module
 	// because that's what we exported in home.js
 	// all angular modules have a name
 	// property who's value is the name you set the
 	// module to be
-	_componentsHomeHome.home.name, _componentsCommonCommon.common.name, _sharedShared.shared.name, _componentsAuthAuth.auth.name, _componentsCasinoCasino.casino.name, _componentsAtmAtm.atm.name, _componentsRulesRules.rules.name, _componentsTestingTesting.testing.name]).directive('app', _appDirective.appDirective);
+	_componentsHomeHome.home.name, _componentsCommonCommon.common.name, _sharedShared.shared.name, _componentsAuthAuth.auth.name, _componentsCasinoCasino.casino.name, _componentsAtmAtm.atm.name, _componentsRulesRules.rules.name]).directive('app', _appDirective.appDirective);
 
 /***/ },
 /* 1 */
@@ -73826,7 +73824,7 @@
 	    this.message = 'Don\'t have an account?';
 	    this.other = 'signup';
 	    this.credits = {};
-	    this.showUserError = false;
+	    this.showingAlert = false;
 	  }
 	
 	  _createClass(AuthController, [{
@@ -73843,7 +73841,7 @@
 	      this.Auth.signin(credits).then(function () {
 	        _this.$state.go('casino');
 	      })['catch'](function () {
-	        _this.showError();
+	        _this.showAlert();
 	      });
 	    }
 	  }, {
@@ -73854,7 +73852,7 @@
 	      this.Auth.signup(credits).then(function () {
 	        _this2.$state.go('casino');
 	      })['catch'](function (e) {
-	        _this2.showError(e);
+	        _this2.showAlert(e);
 	      });
 	    }
 	  }, {
@@ -73864,15 +73862,15 @@
 	      this.$state.go('home');
 	    }
 	  }, {
-	    key: 'showError',
-	    value: function showError(e) {
+	    key: 'showAlert',
+	    value: function showAlert(e) {
 	      var _this3 = this;
 	
-	      this.showUserError = true;
+	      this.showingAlert = true;
 	      this.errorMessage = 'Nope';
 	      this.credits = {};
 	      this.$timeout(function () {
-	        _this3.showUserError = false;
+	        _this3.showingAlert = false;
 	        _this3.errorMessage = '';
 	      }, 3000);
 	    }
@@ -73902,7 +73900,7 @@
 /* 57 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"auth\">\n  <form class=\"card\" name=\"authform\" novalidate ng-submit=\"vm.send()\">\n    <div class=\"title\">\n      <h3>{{ vm.current }}</h3>\n    </div>\n    <div class=\"inputs\">\n      <textbox bind-to=\"vm.credits.username\" label=\"username\" required></textbox>\n      <textbox bind-to=\"vm.credits.password\" label=\"password\" type=\"password\" required></textbox>\n    </div>\n    <div class=\"buttons\">\n      <button \n        class=\"button raised accent\"\n        ng-disabled=\"authform.$invalid\"\n        >\n        {{ vm.current }}\n      </button>\n    </div>\n  </form>\n\n  <div class=\"action\">\n    <h3>{{ vm.message }}</h3>\n    <button class=\"button raised\" ng-click=\"vm.changeForm()\">{{ vm.other }}</button>\n  </div>\n\n  <div class=\"err-message\" ng-if=\"vm.showUserError\">\n    <h1 class=\"message\">{{ vm.errorMessage }}</h1>\n  </div>\n</section>\n"
+	module.exports = "<section class=\"auth\">\n  <form class=\"card\" name=\"authform\" novalidate ng-submit=\"vm.send()\">\n    <div class=\"title\">\n      <h3>{{ vm.current }}</h3>\n    </div>\n    <div class=\"inputs\">\n      <textbox bind-to=\"vm.credits.username\" label=\"username\" required></textbox>\n      <textbox bind-to=\"vm.credits.password\" label=\"password\" type=\"password\" required></textbox>\n    </div>\n    <div class=\"buttons\">\n      <button \n        class=\"button raised accent\"\n        ng-disabled=\"authform.$invalid\"\n        >\n        {{ vm.current }}\n      </button>\n    </div>\n  </form>\n\n  <div class=\"action\">\n    <h3>{{ vm.message }}</h3>\n    <button class=\"button raised\" ng-click=\"vm.changeForm()\">{{ vm.other }}</button>\n  </div>\n\n  <div class=\"err-message\" ng-if=\"vm.showingAlert\">\n    <h1 class=\"message\">{{ vm.errorMessage }}</h1>\n  </div>\n</section>\n"
 
 /***/ },
 /* 58 */
@@ -74116,11 +74114,11 @@
 	    value: function showAlert(e) {
 	      var _this2 = this;
 	
-	      this.showAlert = true;
+	      this.showingAlert = true;
 	      this.alert = e || 'Nope';
 	      this.credits = {};
 	      this.$timeout(function () {
-	        _this2.showAlert = false;
+	        _this2.showingAlert = false;
 	        _this2.alert = '';
 	      }, 3000);
 	    }
@@ -74139,7 +74137,7 @@
 /* 63 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"casino\">\n  <div class=\"hero\">\n    <div class=\"title\">\n      <h1>Hey There, {{ ::vm.username | capitalize }}</h1>\n      <h3>Coins: {{ vm.coins }}</h3>\n    </div>\n\n    <div class=\"alert-message\" ng-if=\"vm.showAlert\">\n      <h1 class=\"message\">{{ vm.alert }}</h1>\n    </div>\n\n    <div class=\"reels\">\n      <div class=\"reel fx-bounce-normal fx-speed-1000\" ng-hide=\"vm.spinning\">{{vm.reel1}}</div>\n      <div class=\"reel fx-bounce-normal fx-speed-1000\" ng-hide=\"vm.spinning\">{{vm.reel2}}</div>\n      <div class=\"reel fx-bounce-normal fx-speed-1000\" ng-hide=\"vm.spinning\">{{vm.reel3}}</div>\n    </div>\n\n    <div class=\"action\">\n      <button class=\"button raised\" ng-click=\"vm.leverOrAtm()\">{{ vm.buttonText }}</button>\n\n      <input \n        type=\"text\" \n        name=\"amountToBet\" \n        ng-model=\"vm.betAmount\"\n        ng-if=\"vm.coins\"\n        placeholder=\"# of Coins to Bet\" \n        ng-enter=\"vm.pullTheLever()\"\n        >\n\n    </div>\n\n  </div>\n</section>\n"
+	module.exports = "<section class=\"casino\">\n  <div class=\"hero\">\n    <div class=\"title\">\n      <h1>Hey There, {{ ::vm.username | capitalize }}</h1>\n      <h3>Coins: {{ vm.coins }}</h3>\n    </div>\n\n    <div class=\"alert-message\" ng-if=\"vm.showingAlert\">\n      <h1 class=\"message\">{{ vm.alert }}</h1>\n    </div>\n\n    <div class=\"reels\">\n      <div class=\"reel fx-bounce-normal fx-speed-1000\" ng-hide=\"vm.spinning\">{{vm.reel1}}</div>\n      <div class=\"reel fx-bounce-normal fx-speed-1000\" ng-hide=\"vm.spinning\">{{vm.reel2}}</div>\n      <div class=\"reel fx-bounce-normal fx-speed-1000\" ng-hide=\"vm.spinning\">{{vm.reel3}}</div>\n    </div>\n\n    <div class=\"action\">\n      <button class=\"button raised\" ng-click=\"vm.leverOrAtm()\">{{ vm.buttonText }}</button>\n\n      <input \n        type=\"text\" \n        name=\"amountToBet\" \n        ng-model=\"vm.betAmount\"\n        ng-if=\"vm.coins\"\n        placeholder=\"# of Coins to Bet\" \n        ng-enter=\"vm.pullTheLever()\"\n        >\n\n    </div>\n\n  </div>\n</section>\n"
 
 /***/ },
 /* 64 */
@@ -74280,7 +74278,7 @@
 	      var _this = this;
 	
 	      if (this.withdrawAmount > this.balance) {
-	        this.showError('You don\'t have enough in your account for that!');
+	        this.showAlert('You don\'t have enough in your account for that!');
 	        return;
 	      }
 	
@@ -74289,15 +74287,15 @@
 	      });
 	    }
 	  }, {
-	    key: 'showError',
-	    value: function showError(e) {
+	    key: 'showAlert',
+	    value: function showAlert(e) {
 	      var _this2 = this;
 	
-	      this.showUserError = true;
+	      this.showingAlert = true;
 	      this.errorMessage = e || 'Nope';
 	      this.credits = {};
 	      this.$timeout(function () {
-	        _this2.showUserError = false;
+	        _this2.showingAlert = false;
 	        _this2.errorMessage = '';
 	      }, 3000);
 	    }
@@ -74316,7 +74314,7 @@
 /* 69 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"atm\">\n  <div class=\"hero\">\n    <div class=\"title\">\n      <h1>Balance: {{ vm.balance }}</h1>\n    </div>\n\n    <div class=\"err-message\" ng-if=\"vm.showUserError\">\n      <h1 class=\"message\">{{ vm.errorMessage }}</h1>\n    </div>\n\n    <div class=\"action\">\n      <button class=\"button raised\" ng-click=\"vm.withdraw()\" ng-if=\"vm.balance\">Withdraw</button>\n\n      <input \n        type=\"text\" \n        name=\"amountToWithdraw\" \n        ng-model=\"vm.withdrawAmount\" \n        placeholder=\"Amount to Withdraw\" \n        ng-if=\"vm.balance\" \n        ng-enter=\"vm.withdraw()\"\n        >\n\n    </div>\n\n  </div>\n</section>\n"
+	module.exports = "<section class=\"atm\">\n  <div class=\"hero\">\n    <div class=\"title\">\n      <h1>Balance: {{ vm.balance }}</h1>\n    </div>\n\n    <div class=\"err-message\" ng-if=\"vm.showingAlert\">\n      <h1 class=\"message\">{{ vm.errorMessage }}</h1>\n    </div>\n\n    <div class=\"action\">\n      <button class=\"button raised\" ng-click=\"vm.withdraw()\" ng-if=\"vm.balance\">Withdraw</button>\n\n      <input \n        type=\"text\" \n        name=\"amountToWithdraw\" \n        ng-model=\"vm.withdrawAmount\" \n        placeholder=\"Amount to Withdraw\" \n        ng-if=\"vm.balance\" \n        ng-enter=\"vm.withdraw()\"\n        >\n\n    </div>\n\n  </div>\n</section>\n"
 
 /***/ },
 /* 70 */
@@ -74451,182 +74449,6 @@
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"rules\">\n  <div class=\"hero\">\n    <div class=\"title\">\n      <h1>{{ ::vm.greeting }}</h1>\n      <h2 ng-repeat=\"rule in vm.rules track by $index\">{{rule}}</h2>\n    </div>\n  </div>\n</section>\n"
-
-/***/ },
-/* 76 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _testingDirective = __webpack_require__(77);
-	
-	var _angular = __webpack_require__(10);
-	
-	var _angular2 = _interopRequireDefault(_angular);
-	
-	var _angularUiRouter = __webpack_require__(12);
-	
-	var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
-	
-	var testing = _angular2['default'].module('testing', [_angularUiRouter2['default']]).config(function ($stateProvider) {
-	  $stateProvider.state('testing', {
-	    url: '/testing',
-	    template: '<testing></testing>'
-	  });
-	}).directive('testing', _testingDirective.testingDirective);
-	exports.testing = testing;
-
-/***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	__webpack_require__(78);
-	
-	var _testingController = __webpack_require__(80);
-	
-	var _testingHtml = __webpack_require__(81);
-	
-	var _testingHtml2 = _interopRequireDefault(_testingHtml);
-	
-	var testingDirective = function testingDirective() {
-	  return {
-	    controller: _testingController.TestingController,
-	    template: _testingHtml2['default'],
-	    controllerAs: 'vm',
-	    scope: {},
-	    replace: true,
-	    restrict: 'E'
-	  };
-	};
-	exports.testingDirective = testingDirective;
-
-/***/ },
-/* 78 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(79);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(4)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/stylus-loader/index.js!./testing.styl", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/stylus-loader/index.js!./testing.styl");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(3)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, ".testing {\n  position: relative;\n}\n.testing .hero {\n  height: 200vh;\n  background-color: rgba(0,0,0,0.4);\n}\n.testing .hero * {\n  color: #fff;\n}\n.testing .hero .title {\n  *zoom: 1;\n  width: auto;\n  max-width: 600px;\n  float: none;\n  display: block;\n  margin-right: auto;\n  margin-left: auto;\n  padding-left: 0;\n  padding-right: 0;\n  text-align: center;\n}\n.testing .hero .title:before,\n.testing .hero .title:after {\n  content: '';\n  display: table;\n}\n.testing .hero .title:after {\n  clear: both;\n}\n.testing .hero .title h1 {\n  font-size: 3rem;\n}\n.testing .hero .title h3 {\n  font-size: 2rem;\n}\n.testing .hero .title * {\n  font-weight: 300;\n}\n.testing .hero .items-container {\n  display: flex;\n  justify-content: center;\n  flex-wrap: wrap;\n  text-align: center;\n}\n.testing .hero .items-container .item {\n  margin: 1vw;\n  width: 10vw;\n  height: 20vh;\n  background-color: #1de9b6;\n  position: relative;\n}\n.testing .hero .items-container .item .item-name {\n  line-height: 19vh;\n  font-size: 2rem;\n}\n.testing .hero .items-container .item .item-delete {\n  position: absolute;\n  left: 5px;\n  top: 5px;\n  cursor: pointer;\n}\n.testing .hero .action {\n  display: flex;\n  justify-content: center;\n}\n.testing .hero .action .button {\n  margin: 1vw;\n}\n.testing .hero .action ::-webkit-input-placeholder {\n  color: #ff8159;\n}\n.testing .hero .action :-moz-placeholder {\n  color: #ff8159;\n}\n.testing .hero .action ::-moz-placeholder {\n  color: #ff8159;\n}\n.testing .hero .action :-ms-input-placeholder {\n  color: #ff8159;\n}\n.testing .hero .alert-message {\n  text-align: center;\n}\n", ""]);
-	
-	// exports
-
-
-/***/ },
-/* 80 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var TestingController = (function () {
-	  function TestingController($timeout) {
-	    _classCallCheck(this, TestingController);
-	
-	    this.$timeout = $timeout;
-	    this.greeting = 'TestingController!';
-	    this.items = [{ id: 1, name: 'David' }, { id: 2, name: 'Jack' }, { id: 3, name: 'Nick' }];
-	    this.nextId = 4;
-	  }
-	
-	  _createClass(TestingController, [{
-	    key: 'addItem',
-	    value: function addItem() {
-	      if (!this.itemName) {
-	        this.showAlert('Gotta enter an item name first!');
-	        return;
-	      }
-	
-	      var item = {
-	        id: this.nextId++,
-	        name: this.itemName
-	      };
-	      this.items.push(item);
-	      this.itemName = '';
-	    }
-	  }, {
-	    key: 'removeItem',
-	    value: function removeItem(idx) {
-	      this.items.splice(idx, 1);
-	    }
-	  }, {
-	    key: 'showAlert',
-	    value: function showAlert(e) {
-	      var _this = this;
-	
-	      this.showAlert = true;
-	      this.alert = e || 'Nope';
-	      this.credits = {};
-	      this.$timeout(function () {
-	        _this.showAlert = false;
-	        _this.alert = '';
-	      }, 3000);
-	    }
-	  }]);
-	
-	  return TestingController;
-	})();
-	
-	;
-	
-	TestingController.$inject = ['$timeout'];
-	
-	exports.TestingController = TestingController;
-
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
-
-	module.exports = "<section class=\"testing\">\n  <div class=\"hero\">\n    <div class=\"title\">\n      <h1>\n        Hey from {{ vm.greeting }}\n      </h1>\n    </div>\n\n    <div class=\"alert-message\" ng-if=\"vm.showAlert\">\n      <h1 class=\"message\">\n        {{ vm.alert }}\n      </h1>\n    </div>\n\n    <div class=\"action\">\n      <button class=\"button raised\" ng-click=\"vm.addItem()\">Add</button>\n\n      <input \n        type=\"text\" \n        name=\"item\" \n        ng-model=\"vm.itemName\"\n        placeholder=\"item name\" \n        ng-enter=\"vm.addItem()\"\n        >\n\n    </div>\n\n    <div class=\"items-container\">\n      <div class=\"item\" ng-repeat=\"item in vm.items track by item.id\">\n        <div class=\"item-delete\" ng-click=\"vm.removeItem($index)\">\n          X\n        </div>\n        <div class=\"item-name\">\n          {{ ::item.name }}\n        </div>\n      </div>\n    </div>\n\n  </div>\n</section>\n"
 
 /***/ }
 /******/ ]);
